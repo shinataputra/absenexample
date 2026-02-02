@@ -1,0 +1,5 @@
+CREATE TABLE absen (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    uid VARCHAR(20),
+    waktu DATETIME
+);
