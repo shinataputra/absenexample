@@ -1,8 +1,8 @@
 <?php
 $host = "shared_postgres";   // nama container postgres
-$db   = "db_absen";
-$user = "absen_user";
-$pass = "absen123";
+$db = "db_absen";
+$user = "admin";
+$pass = "admin123";
 
 try {
     $pdo = new PDO(
