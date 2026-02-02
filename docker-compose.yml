@@ -20,8 +20,7 @@ services:
       MYSQL_DATABASE: db_absen
       MYSQL_USER: absen
       MYSQL_PASSWORD: absen123
-    ports:
-      - "3306:3306"
+
     volumes:
       - dbdata:/var/lib/mysql
 
