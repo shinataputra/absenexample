@@ -1,22 +1,44 @@
 <?php
-$conn = new mysqli("db","absen","absen123","db_absen");
-$data = $conn->query("SELECT * FROM absen ORDER BY waktu DESC");
+require "db.php";
+
+$data = $pdo->query(
+    "SELECT uid, waktu 
+     FROM absen 
+     ORDER BY waktu DESC 
+     LIMIT 50"
+)->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<h2>Daftar Absensi</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Absensi RFID</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        table { border-collapse: collapse; width: 400px; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+        th { background: #eee; }
+    </style>
+</head>
+<body>
 
-<table border="1" cellpadding="6">
+<h2>📋 Data Absensi RFID</h2>
+
+<table>
 <tr>
-  <th>No</th>
-  <th>UID</th>
-  <th>Waktu</th>
+    <th>UID</th>
+    <th>Waktu</th>
 </tr>
 
-<?php $no=1; while($r=$data->fetch_assoc()): ?>
+<?php foreach ($data as $row): ?>
 <tr>
-  <td><?= $no++ ?></td>
-  <td><?= $r['uid'] ?></td>
-  <td><?= $r['waktu'] ?></td>
+    <td><?= htmlspecialchars($row['uid']) ?></td>
+    <td><?= $row['waktu'] ?></td>
 </tr>
-<?php endwhile ?>
+<?php endforeach; ?>
+
 </table>
+
+</body>
+</html>

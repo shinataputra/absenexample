@@ -1,7 +1,11 @@
 FROM php:8.2-apache
 
-# Install mysqli extension
-RUN docker-php-ext-install mysqli
+# install ekstensi postgres
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
-# Aktifkan mod_rewrite (opsional, tapi aman)
+# enable apache rewrite (optional)
 RUN a2enmod rewrite
+
+WORKDIR /var/www/html

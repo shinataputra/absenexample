@@ -1,15 +1,21 @@
 <?php
-$conn = new mysqli("db","absen","absen123","db_absen");
+require "db.php";
 
-$uid = $_GET['uid'] ?? '';
-
-if ($uid != '') {
-    $stmt = $conn->prepare(
-        "INSERT INTO absen (uid, waktu) VALUES (?, NOW())"
-    );
-    $stmt->bind_param("s", $uid);
-    $stmt->execute();
-    echo "OK";
-} else {
-    echo "NO UID";
+if (!isset($_GET['uid'])) {
+    http_response_code(400);
+    echo "UID kosong";
+    exit;
 }
+
+$uid = trim($_GET['uid']);
+
+// validasi sederhana
+if (strlen($uid) < 4) {
+    echo "UID tidak valid";
+    exit;
+}
+
+$stmt = $pdo->prepare("INSERT INTO absen (uid) VALUES (:uid)");
+$stmt->execute(['uid' => $uid]);
+
+echo "OK";
