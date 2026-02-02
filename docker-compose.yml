@@ -2,10 +2,10 @@ version: "3.8"
 
 services:
   web:
-    image: php:8.2-apache
+    build: .
     container_name: absen_web
     ports:
-      - "8080:80"
+      - "8688:80"
     volumes:
       - ./:/var/www/html
     depends_on:
