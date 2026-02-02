@@ -7,22 +7,35 @@ services:
     ports:
       - "8688:80"
     volumes:
-      - ./:/var/www/html
+      - .:/var/www/html
+      - /etc/localtime:/etc/localtime:ro
     depends_on:
       - db
 
   db:
-    image: mysql:8.0
+    image: mysql:8.0.40
     container_name: absen_db
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: db_absen
       MYSQL_USER: absen
       MYSQL_PASSWORD: absen123
-
+      TZ: Asia/Jakarta
     volumes:
       - dbdata:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: absen_phpmyadmin
+    ports:
+      - "8689:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+      TZ: Asia/Jakarta
+    depends_on:
+      - db
 
 volumes:
   dbdata:
